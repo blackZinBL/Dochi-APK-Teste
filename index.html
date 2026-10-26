@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffb8d4">
+<title>Dochi Pet Cute</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffe3ef;--ink:#6b3b57;--soft:#b9809f;--card:#fffafc;--btn:#ffd1e3;--btn2:#ffb8d4;--w0:#ffe9b8;--w1:#d9d2ff;--w2:#c8f0f5;--fl:#f6c9a3;--body:#fff7fb;--ch:#ff9fbd}
+@media(prefers-color-scheme:dark){:root{--bg:#2b1a2e;--ink:#ffe3f0;--soft:#d9a7c4;--card:#3a2742;--btn:#5a3569;--btn2:#74427f;--w0:#6b5a3a;--w1:#3b3866;--w2:#2f5560;--fl:#5a4252;--body:#ffeaf4;--ch:#ff8fb3;color-scheme:dark}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{font-family:'Fredoka','Trebuchet MS',system-ui,sans-serif;color:var(--ink);background:var(--bg);display:flex;justify-content:center;overflow:hidden;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#app{width:min(100%,440px);height:100vh;height:100dvh;display:flex;flex-direction:column;gap:8px;padding:calc(10px + env(safe-area-inset-top,0px)) 12px calc(10px + env(safe-area-inset-bottom,0px))}
+button{font:inherit;font-weight:600;color:var(--ink);background:var(--btn);border:0;padding:12px 16px;border-radius:999px;cursor:pointer;box-shadow:0 5px 0 var(--btn2);transition:transform .1s,box-shadow .1s}
+button:active{transform:translateY(4px);box-shadow:0 1px 0 var(--btn2)}
+button:focus-visible,#sv:focus-visible{outline:3px solid var(--ch);outline-offset:3px}
+header,.bars{display:flex;gap:6px}
+.chip{flex:1;min-width:0;background:var(--card);border-radius:18px;padding:6px 10px;font-size:.9rem;box-shadow:0 3px 0 var(--btn2);text-align:left}
+.chip small{display:block;color:var(--soft);font-size:.7rem;font-weight:400}
+.bars div{flex:1;background:var(--card);border-radius:14px;padding:6px 8px}
+.bars em{font-style:normal;font-size:.8rem}
+i.t{display:block;height:6px;border-radius:9px;background:var(--btn);overflow:hidden;margin-top:3px}
+i.t u{display:block;height:100%;background:var(--ch);border-radius:9px;transition:width .5s}
+.low u{background:#ff5a6e}
+#stage{position:relative;flex:1;min-height:0;border-radius:28px;overflow:hidden;background:linear-gradient(var(--wall) 0 62%,var(--fl) 62%);box-shadow:0 8px 0 var(--btn2)}
+#stage[data-s="0"]{--wall:var(--w0)}#stage[data-s="1"]{--wall:var(--w1)}#stage[data-s="2"]{--wall:var(--w2)}
+.sc{display:none;position:absolute;inset:0}.sc.on{display:block}
+.ob{position:absolute;background:none;box-shadow:none;font-size:84px;line-height:1;padding:0;filter:drop-shadow(0 6px 0 #0002)}
+.ob:active{box-shadow:none;transform:scale(.95)}
+span.ob{pointer-events:none}
+.ob small,.it small{display:block;font:600 .7rem 'Fredoka',sans-serif;background:var(--card);border-radius:10px;padding:1px 8px;margin:2px auto 0;width:max-content}
+#fr{position:absolute;left:4%;bottom:34%;width:136px;height:196px;perspective:600px;cursor:pointer}
+#fr .in{position:absolute;inset:0;background:#e9f6ff;border:4px solid #cfe3ef;border-radius:14px;display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:4px;padding:6px;pointer-events:none}
+#fr.open .in{pointer-events:auto}
+.it{padding:4px;font-size:30px;line-height:1.2;background:#fff;box-shadow:none;border-radius:14px}
+.it small{color:var(--ink)}
+#fr .door{position:absolute;inset:0;background:#fff;border:4px solid #cfe3ef;border-radius:14px;padding:0;color:#7a8fa0;font-size:.8rem;box-shadow:4px 6px 0 #0002;transform-origin:0 50%;transition:transform .5s}
+#fr.open .door{transform:rotateY(-110deg)}
+#fr .door::after{content:"";position:absolute;right:10px;top:30%;width:8px;height:48px;border-radius:9px;background:#b6c9d6}
+#pet{position:absolute;left:50%;bottom:4%;width:210px;margin-left:-105px;transform:scale(var(--g,1));transform-origin:50% 100%;transition:transform 1.2s,left .4s;z-index:2}
+#stage[data-s="0"] #pet{left:63%}
+#sv{display:block;width:100%;cursor:pointer;transform-origin:50% 100%;animation:slime 7s ease-in-out infinite}
+@keyframes slime{0%,100%{transform:scale(1)}20%{transform:scale(1.05,.95)}40%{transform:scale(.97,1.04)}55%{transform:scale(1.12,.86)}63%{transform:translateY(-28px) scale(.93,1.1)}72%{transform:scale(1.14,.84)}80%{transform:scale(.98,1.03)}}
+#sv.sq{animation:sq .45s ease-out}
+@keyframes sq{30%{transform:scale(1.18,.78)}60%{transform:scale(.92,1.1)}}
+.sl #sv{animation:zb 3s ease-in-out infinite}
+@keyframes zb{50%{transform:scale(1.04,.96)}}
+.e{transform-box:fill-box;transform-origin:center;animation:bl 4.5s infinite}
+@keyframes bl{94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+#mo,#md,.shut{display:none}
+#pet.eat #mo{display:block}#pet.eat #ms{display:none}
+#pet.sad:not(.eat) #md{display:block}#pet.sad:not(.eat) #ms{display:none}
+.sl .eyes{display:none}.sl .shut{display:block}
+#dirt{transition:opacity .6s}
+.hr{position:absolute;bottom:34%;font-size:26px;pointer-events:none;z-index:4;animation:up 1.3s ease-out forwards}
+@keyframes up{to{transform:translate(var(--x),-150px) scale(1.3);opacity:0}}
+#zz{display:none;position:absolute;left:62%;top:22%;font-size:34px;z-index:4;animation:zf 2s ease-in-out infinite}
+.sl #zz{display:block}
+@keyframes zf{50%{transform:translateY(-14px)}}
+#dim{position:absolute;inset:0;background:#10163a;opacity:0;transition:opacity .8s;pointer-events:none;z-index:3}
+.sl #dim{opacity:.5}
+#tt{position:absolute;left:50%;top:10px;transform:translate(-50%,-10px);background:var(--card);padding:8px 16px;border-radius:999px;box-shadow:0 4px 0 var(--btn2);opacity:0;transition:.3s;pointer-events:none;z-index:5;max-width:92%;text-align:center}
+#tt.on{opacity:1;transform:translate(-50%,0)}
+nav{display:flex;gap:8px}
+nav button{flex:1;padding:10px 4px;font-size:.95rem}
+nav button.on{background:var(--btn2)}
+.ov{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#3a1d3acc;z-index:9;padding:20px}
+.ov.on{display:flex}
+.card{background:var(--card);border-radius:32px;padding:26px 22px;max-width:360px;width:100%;text-align:center;box-shadow:0 10px 0 var(--btn2);display:flex;flex-direction:column;gap:12px}
+.card h2{margin:0;font-size:1.5rem}.card p{margin:0}
+.big{font-size:3rem}
+.alt{background:transparent;box-shadow:none;color:var(--soft)}
+input{font:inherit;padding:12px;border-radius:16px;border:3px solid var(--btn2);background:var(--bg);color:var(--ink);text-align:center;-webkit-user-select:text;user-select:text}
+#o-bye{background:#000;color:#fff}
+#blk{position:fixed;inset:0;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:2.2rem;opacity:0;pointer-events:none;transition:opacity .5s;z-index:20}
+#blk.on{opacity:1;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+ <button class="chip" id="prof" aria-label="Trocar nome">😊 <b id="nm"></b><small id="sg">Filhote</small></button>
+ <div class="chip">☀️ Dia <b id="dn">1</b><i class="t"><u id="dp"></u></i></div>
+ <div class="chip">🪙 <b id="co">0</b><small>moedas</small></div>
+</header>
+<div class="bars">
+ <div><em>🍖 Fome</em><i class="t"><u id="b0"></u></i></div>
+ <div><em>🫧 Banho</em><i class="t"><u id="b1"></u></i></div>
+ <div><em>😴 Sono</em><i class="t"><u id="b2"></u></i></div>
+</div>
+<div id="stage" data-s="0">
+ <section class="sc on" id="s0">
+  <div id="fr"><div class="in">
+   <button class="it" data-e="🍪" data-a="10" data-t="Cookie! Nhac, nhac!">🍪<small>Cookie</small></button>
+   <button class="it" data-e="🧃" data-a="8" data-t="Suquinho gelado! Glub!">🧃<small>Suco</small></button>
+   <button class="it" data-e="💧" data-a="5" data-t="Água fresquinha! 💧">💧<small>Água</small></button>
+   <button class="it" data-e="🍛" data-a="35" data-t="Que prato delicioso! Nham!">🍛<small>Prato</small></button>
+  </div><button class="door" aria-label="Abrir geladeira">Geladeira</button></div>
+ </section>
+ <section class="sc" id="s1">
+  <button class="ob" id="bed" style="left:3%;bottom:36%">🛏️<small>Cama</small></button>
+  <button class="ob" id="wd" style="right:5%;bottom:36%">🗄️<small>Armário</small></button>
+ </section>
+ <section class="sc" id="s2">
+  <span class="ob" style="left:4%;bottom:34%">🛁</span>
+  <button class="ob" id="sh" style="right:8%;top:6%">🚿<small>Chuveiro</small></button>
+ </section>
+ <div id="pet">
+  <svg id="sv" viewBox="0 0 200 180" role="button" tabindex="0" aria-label="Fazer carinho no Dochi">
+   <ellipse cx="100" cy="168" rx="62" ry="8" fill="#000" opacity=".08"/>
+   <path d="M100 18c-48 0-78 36-78 78 0 38 26 66 78 66s78-28 78-66c0-42-30-78-78-78z" fill="var(--body)" stroke="#ffc2d9" stroke-width="4"/>
+   <path d="M70 26c-8-12-4-22 6-24 4 8 2 16-2 22zM130 26c8-12 4-22-6-24-4 8-2 16 2 22z" fill="var(--body)" stroke="#ffc2d9" stroke-width="4" stroke-linejoin="round"/>
+   <g id="dirt" fill="#b08968"><circle cx="58" cy="132" r="5"/><circle cx="142" cy="68" r="4"/><circle cx="112" cy="142" r="6"/><circle cx="80" cy="60" r="3.5"/></g>
+   <g class="eyes"><ellipse class="e" cx="72" cy="94" rx="9" ry="11" fill="#5a2d49"/><ellipse class="e" cx="128" cy="94" rx="9" ry="11" fill="#5a2d49"/><circle cx="75" cy="90" r="3.5" fill="#fff"/><circle cx="131" cy="90" r="3.5" fill="#fff"/></g>
+   <path class="shut" d="M62 96q10 8 20 0M118 96q10 8 20 0" fill="none" stroke="#5a2d49" stroke-width="4" stroke-linecap="round"/>
+   <ellipse cx="52" cy="112" rx="13" ry="8" fill="var(--ch)" opacity=".6"/><ellipse cx="148" cy="112" rx="13" ry="8" fill="var(--ch)" opacity=".6"/>
+   <path id="ms" d="M90 108q10 12 20 0" fill="none" stroke="#5a2d49" stroke-width="4" stroke-linecap="round"/>
+   <path id="md" d="M90 120q10-12 20 0" fill="none" stroke="#5a2d49" stroke-width="4" stroke-linecap="round"/>
+   <g id="mo"><ellipse cx="100" cy="115" rx="10" ry="12" fill="#5a2d49"/><ellipse cx="100" cy="121" rx="6" ry="5" fill="#ff8fb3"/></g>
+  </svg>
+ </div>
+ <div id="zz">💤</div><div id="dim"></div><div id="tt" aria-live="polite"></div>
+</div>
+<nav>
+ <button class="on" data-i="0">🍳 Cozinha</button>
+ <button data-i="1">🛏️ Quarto</button>
+ <button data-i="2">🛁 Banheiro</button>
+</nav>
+</div>
+
+<div class="ov on" id="o-ai"><div class="card"><div class="big">🌸</div><h2>Dochi Pet Cute</h2><p>Esse jogo é feito com IA (Claude).</p>
+ <button id="yes">Ok, aceito seu jogo :3</button><button id="no" class="alt">Nah, não gosto de jogo com IA.</button></div></div>
+<div class="ov" id="o-nm"><div class="card"><h2>Qual é o seu nome?</h2><p>Sua conta fica salva só neste aparelho.</p>
+ <input id="in" maxlength="12" placeholder="Seu nome" autocomplete="off"><button id="ok">Começar 💗</button></div></div>
+<div class="ov" id="o-dead"><div class="card"><div class="big">😵</div><h2>Você deixou o Coitado morrer! 😡</h2><p>Cuide de novo dele!</p>
+ <button id="rev">Desculpe, vou cuidar 🥺</button><button id="no2" class="alt">Não 😡</button></div></div>
+<div class="ov" id="o-bye"><div class="card" style="background:none;box-shadow:none"><div class="big">👋</div><h2>Jogo fechado</h2><button id="re" class="alt">Abrir de novo</button></div></div>
+<div id="blk"></div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},DAY=60000,ST=['Filhote','Criança','Jovem','Adulto'],SZ=[.55,.7,.85,1],
+S={n:'',d:1,c:0,h:90,b:80,s:90,t:0},play=false,dead=false,sl=false,busy=false,stg=-1,tm;
+try{var v=JSON.parse(localStorage.getItem('dochi'));if(v&&v.n)S=Object.assign(S,v)}catch(e){}
+function sv(){try{localStorage.setItem('dochi',JSON.stringify(S))}catch(e){}}
+function cl(x){return Math.max(0,Math.min(100,x))}
+function show(id,on){$(id).classList.toggle('on',on!==false)}
+function say(t){var e=$('tt');e.textContent=t;e.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){e.classList.remove('on')},2000)}
+function hearts(k,em){var st=$('stage');for(var i=0;i<k;i++){var h=document.createElement('span');h.className='hr';h.textContent=em||'💗';h.style.left=(30+Math.random()*40)+'%';h.style.setProperty('--x',(Math.random()*80-40)+'px');h.style.animationDelay=i*.1+'s';st.appendChild(h);setTimeout(function(x){x.remove()},1700,h)}}
+function squish(){var s=$('sv');s.classList.remove('sq');void s.getBoundingClientRect();s.classList.add('sq');setTimeout(function(){s.classList.remove('sq')},460)}
+function ui(){
+ $('nm').textContent=S.n;$('co').textContent=S.c;$('dn').textContent=S.d;$('dp').style.width=S.t/DAY*100+'%';
+ [['h','b0'],['b','b1'],['s','b2']].forEach(function(a){var x=Math.round(S[a[0]]),u=$(a[1]);u.style.width=x+'%';u.parentNode.parentNode.classList.toggle('low',x<25)});
+ var g=Math.min(3,Math.floor((S.d-1)/10));
+ if(g!==stg){if(stg>=0){say('Dochi cresceu! Agora é '+ST[g]+' 🎉');hearts(6,'🎉')}stg=g;$('pet').style.setProperty('--g',SZ[g]);$('sg').textContent=ST[g]}
+ $('pet').classList.toggle('sad',Math.min(S.h,S.b,S.s)<25);
+ $('dirt').style.opacity=S.b<50?1:0;
+}
+function wake(){sl=false;document.body.classList.remove('sl')}
+function eat(e,a,t){if(sl||dead)return;S.h=cl(S.h+a);var p=$('pet');p.classList.add('eat');setTimeout(function(){p.classList.remove('eat')},900);squish();hearts(3,e);say(t);ui();sv()}
+var P=['Hihi, isso faz cosquinha!','Dochi está feliz!','Mais carinho, por favor!','Nyaa~ que fofo!','Dochi vai derreter de amor!'];
+function pat(){if(dead)return;if(sl){wake();say('Dochi acordou! 😴');return}squish();hearts(2);say(Math.random()<.3?S.n+', você é o favorito do Dochi!':P[Math.floor(Math.random()*P.length)])}
+function go(i){wake();$('fr').classList.remove('open');document.querySelectorAll('.sc').forEach(function(e,j){e.classList.toggle('on',i===j)});document.querySelectorAll('nav button').forEach(function(e,j){e.classList.toggle('on',i===j)});$('stage').dataset.s=i}
+function bye(){try{window.close()}catch(e){}play=false;show('o-bye')}
+function die(){dead=true;show('o-dead')}
+function start(){if(!play){play=true;go(0)}ui();say('Oi, '+S.n+'! 🌸')}
+function askName(){$('in').value=S.n;show('o-nm')}
+function tick(){
+ if(!play||dead||document.hidden)return;
+ S.h=cl(S.h-.5);S.b=cl(S.b-.3);
+ if(sl){S.s=cl(S.s+15);if(S.s>=100){wake();say('Dochi acordou descansado! 😊')}}else S.s=cl(S.s-.25);
+ S.t+=1000;
+ if(S.t>=DAY){S.t=0;S.d++;S.c+=50;say('Novo dia! +50 🪙');hearts(3,'🪙')}
+ ui();sv();
+ if(S.h<=0&&S.b<=0&&S.s<=0)die();
+}
+$('yes').onclick=function(){show('o-ai',false);S.n?start():askName()};
+$('no').onclick=bye;$('no2').onclick=bye;
+$('re').onclick=function(){location.reload()};
+$('prof').onclick=askName;
+$('ok').onclick=function(){var n=$('in').value.trim().slice(0,12);if(!n){$('in').focus();return}S.n=n;show('o-nm',false);sv();start()};
+$('rev').onclick=function(){S.h=S.b=S.s=60;dead=false;show('o-dead',false);ui();sv();hearts(5);say('Dochi voltou! Cuide bem dele 🥺')};
+$('sv').onclick=pat;
+$('sv').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pat()}};
+$('fr').onclick=function(e){var b=e.target.closest('.it');if(b)eat(b.dataset.e,+b.dataset.a,b.dataset.t);else this.classList.toggle('open')};
+$('bed').onclick=function(){if(sl){wake();return}if(S.s>=95){say('Dochi não está com sono 😊');return}sl=true;document.body.classList.add('sl');say('Boa noite... 💤')};
+$('wd').onclick=function(){say('Em desenvolvimento 🚧')};
+$('sh').onclick=function(){if(busy||sl||dead)return;busy=true;var k=$('blk');k.textContent='🚿';k.classList.add('on');
+ setTimeout(function(){S.b=100;ui();k.textContent='✨ Limpo! ✨'},1200);
+ setTimeout(function(){k.classList.remove('on');busy=false;hearts(4,'✨');sv()},2400)};
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){go(+b.dataset.i)}});
+setInterval(tick,1000);
+if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0)navigator.serviceWorker.register('sw.js').catch(function(){});
+})();
+</script>
+</body>
+</html>
